@@ -196,5 +196,10 @@ namespace CRUD
 
             ShowDB();
         }
+
+        protected void FrontBtn_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("AlbumFront.aspx");
+        }
     }
 }

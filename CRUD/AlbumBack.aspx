@@ -65,6 +65,8 @@
                     <asp:Parameter Name="Id" Type="Int32" />
                 </UpdateParameters>
         </div>
+        <br />
+        <asp:Button ID="FrontBtn" runat="server" Text="回到前台" OnClick="FrontBtn_Click" style="height: 32px" />
     </form>
 </body>
 </html>
