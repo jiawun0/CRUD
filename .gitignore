@@ -1,0 +1,8 @@
+.vs/                       
+packages/                  
+CRUD/bin/       
+CRUD/Content/  
+CRUD/obj/
+CRUD/Scripts/  
+*.user 
+*.config                                   
