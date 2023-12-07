@@ -91,7 +91,7 @@ namespace CRUD
             SqlCommand sqlCommand = new SqlCommand();
             sqlCommand.Connection = connection;
 
-            string sql = "select Photo.Id, Photo.PhotoName, Photo.PhotoDescription, PhotoPath from Photo " +
+            string sql = "select Photo.Id, Photo.PhotoName, Photo.PhotoDescription, Photo.PhotoPath, Photo.IsCover from Photo " +
                 " left join Album on Album.Id = Photo.AlbumId " +
                 " where AlbumId = @AlbumId ";
 
@@ -110,6 +110,25 @@ namespace CRUD
             GridView_PhotoUpload.DataBind();
 
             connection.Close();
+        }
+
+        protected void FrontBtn_Click(object sender, EventArgs e)
+        {
+            if (Request.QueryString["AlbumId"] != null)
+            {
+                string albumId = Request.QueryString["AlbumId"];
+
+                // 將目前頁面的 QueryString 保留並添加到新的 URL 中
+                string redirectUrl = "PhotoFront.aspx?AlbumId=" + albumId;
+
+                // 重新導向到下一個頁面
+                Response.Redirect(redirectUrl);
+            }
+            else
+            {
+                // 如果 AlbumId 為空，您可以定義一個預設的重定向 URL
+                Response.Redirect("PhotoFront.aspx");
+            }
         }
     }
 }

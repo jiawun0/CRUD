@@ -196,10 +196,30 @@ namespace CRUD
 
             ShowDB();
         }
+        protected void GridView_AlbumUpload_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+        {
+            GridView_AlbumUpload.EditIndex = -1;
+            ShowDB();
+        }
 
         protected void FrontBtn_Click(object sender, EventArgs e)
         {
             Response.Redirect("AlbumFront.aspx");
+        }
+        protected void BtnRedirect_Click(object sender, EventArgs e)
+        {
+            if (sender is Button btn)
+            {
+                string albumId = btn.CommandArgument;
+
+                // 將 albumId 添加到 QueryString 並進行重定向
+                Response.Redirect("PhotoBack.aspx?AlbumId=" + albumId);
+            }
+            else
+            {
+                // 如果 AlbumId 為空，您可以定義一個預設的重定向 URL
+                Response.Redirect("PhotoBack.aspx");
+            }
         }
     }
 }

@@ -34,9 +34,8 @@
                     <asp:BoundField DataField="PhotoName" HeaderText="PhotoName" SortExpression="PhotoName" />
                     <asp:BoundField DataField="PhotoDescription" HeaderText="PhotoDescription" SortExpression="PhotoDescription" />
                     <asp:BoundField DataField="PhotoPath" HeaderText="PhotoPath" SortExpression="PhotoPath" />
-                    <asp:BoundField DataField="PhotoCreatTime" HeaderText="PhotoCreatTime" SortExpression="PhotoCreatTime" />
                     <asp:CheckBoxField DataField="IsCover" HeaderText="IsCover" SortExpression="IsCover" />
-                    <asp:BoundField DataField="AlbumId" HeaderText="AlbumId" SortExpression="AlbumId" />
+                    <%--<asp:BoundField DataField="AlbumId" HeaderText="AlbumId" SortExpression="AlbumId" />--%>
                     <asp:CommandField ButtonType="Button" ShowDeleteButton="True" ShowEditButton="True" />
                 </Columns>
             </asp:GridView>
@@ -62,6 +61,7 @@
                     <asp:Parameter Name="Id" Type="Int32" />
                 </UpdateParameters>
         </div>
+        <asp:Button ID="FrontBtn" runat="server" Text="回到前台" OnClick="FrontBtn_Click" style="height: 32px" />
     </form>
 </body>
 </html>

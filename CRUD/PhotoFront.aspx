@@ -29,7 +29,7 @@
             </asp:Repeater>
             </table>
         </div>
-        <asp:Button ID="BackBtn" runat="server" Text="回到後台" OnClick="BackBtn_Click" style="height: 32px" />
+        <%--<asp:Button ID="BackBtn" runat="server" Text="回到後台" OnClick="BackBtn_Click" style="height: 32px" />--%>
     </form>
 </body>
 </html>

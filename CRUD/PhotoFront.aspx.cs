@@ -69,24 +69,24 @@ namespace CRUD
             return string.Empty;
         }
 
-        protected void BackBtn_Click(object sender, EventArgs e)
-        {
-            if (Request.QueryString["AlbumId"] != null)
-            {
-                string albumId = Request.QueryString["AlbumId"];
+        //protected void BackBtn_Click(object sender, EventArgs e)
+        //{
+        //    if (Request.QueryString["AlbumId"] != null)
+        //    {
+        //        string albumId = Request.QueryString["AlbumId"];
 
-                // 將目前頁面的 QueryString 保留並添加到新的 URL 中
-                string redirectUrl = "PhotoBack.aspx?AlbumId=" + albumId;
-                
-                // 重新導向到下一個頁面
-                Response.Redirect(redirectUrl);
-            }
-            else
-            {
-                // 如果 AlbumId 為空，您可以定義一個預設的重定向 URL
-                Response.Redirect("PhotoBack.aspx");
-            }
-            
-        }
+        //        // 將目前頁面的 QueryString 保留並添加到新的 URL 中
+        //        string redirectUrl = "PhotoBack.aspx?AlbumId=" + albumId;
+
+        //        // 重新導向到下一個頁面
+        //        Response.Redirect(redirectUrl);
+        //    }
+        //    else
+        //    {
+        //        // 如果 AlbumId 為空，您可以定義一個預設的重定向 URL
+        //        Response.Redirect("PhotoBack.aspx");
+        //    }
+
+        //}
     }
 }

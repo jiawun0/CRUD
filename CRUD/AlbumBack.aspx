@@ -24,7 +24,7 @@
             <br />
             <asp:Label ID="ResultLabel" runat="server" ></asp:Label>
             <br />
-            <asp:GridView ID="GridView_AlbumUpload" runat="server" AutoGenerateColumns="False" DataKeyNames="Id" OnRowDeleting="GridView1_RowDeleting" OnRowEditing="GridView1_RowEditing" OnRowUpdating="GridView1_RowUpdating">
+            <asp:GridView ID="GridView_AlbumUpload" runat="server" AutoGenerateColumns="False" DataKeyNames="Id" OnRowDeleting="GridView1_RowDeleting" OnRowEditing="GridView1_RowEditing" OnRowUpdating="GridView1_RowUpdating" OnRowCancelingEdit="GridView_AlbumUpload_RowCancelingEdit">
                 <Columns>
                     <asp:BoundField DataField="Id" HeaderText="Id" InsertVisible="False" ReadOnly="True" SortExpression="Id" />
                     <%--<asp:BoundField DataField="AlbumCreatTime" HeaderText="AlbumCreatTime" SortExpression="AlbumCreatTime" />--%>
@@ -45,7 +45,12 @@
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:BoundField DataField="AlbumPath" HeaderText="AlbumPath" SortExpression="AlbumPath" />
-                    <asp:CommandField ButtonType="Button" ShowDeleteButton="True" ShowEditButton="True" />
+                    <asp:TemplateField HeaderText="Actions">
+            <ItemTemplate>
+                <asp:Button ID="BtnRedirectPhotoBack" runat="server" Text="相片後台" CommandArgument='<%# Eval("Id") %>' CommandName="RedirectToPhotoBack" OnClick="BtnRedirect_Click" />
+            </ItemTemplate>
+        </asp:TemplateField>
+        <asp:CommandField ButtonType="Button" ShowDeleteButton="True" ShowEditButton="True" />
                 </Columns>
             </asp:GridView>
             
