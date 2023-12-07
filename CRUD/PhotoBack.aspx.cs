@@ -39,21 +39,32 @@ namespace CRUD
                     //FileUpload1.SaveAs(savePath);
                     string FileName = Path.GetFileName(FileUpload1.FileName);
                     //string saveDirectory = @"C:\Users\88691\source\repos\ADO2\ADO\photo\";
-                    string saveDirectory = Server.MapPath("photo/");// 實際伺服器路徑
+                    string saveDirectory = Server.MapPath("~/Album/");// 實際伺服器路徑
                     string savePath = Path.Combine(saveDirectory, FileName);
                     FileUpload1.SaveAs(savePath);
                     Label1.Text = "已成功上傳: " + FileName;
 
+                    // 取得albumId
+                    string albumId = Request.QueryString["AlbumId"];
+
                     connection.Open();
-                    string sql = "Insert into Album (AlbumName,AlbumPath) values(@AlbumName, @AlbumPath)";
+                    string sql = "Insert into Photo (PhotoName, PhotoDescription, PhotoPath, AlbumId) values(@PhotoName, @PhotoDescription, @PhotoPath, @AlbumId)";
                     SqlCommand sqlCommand = new SqlCommand(sql, connection);
-                    sqlCommand.Parameters.AddWithValue("@AlbumName", FileName); // 使用檔案名稱作為相簿名稱
-                    sqlCommand.Parameters.AddWithValue("@AlbumPath", savePath);
-                    //sqlCommand.Parameters.AddWithValue("@AlbumPath", @"C:\Users\88691\source\repos\ADO2\ADO\photo\" + FileName);
-                    //sqlCommand.Parameters.AddWithValue("@AlbumPath", "photo/" + FileName);
+                    sqlCommand.Parameters.AddWithValue("@PhotoName", TextBox_PhotoName.Text);
+                    sqlCommand.Parameters.AddWithValue("@PhotoDescription", TextBox_PhotoDescription.Text);
+                    sqlCommand.Parameters.AddWithValue("@PhotoPath", savePath);
+                    sqlCommand.Parameters.AddWithValue("@AlbumId", albumId);
+
+                    // 將相對路徑存入資料庫
+                    //string relativePath = "~/Album/" + saveDirectory;
+                    //sqlCommand.Parameters.AddWithValue("@PhotoPath", relativePath);
+
+                    //將準備的SQL指令給操作物件
+                    sqlCommand.CommandText = sql;
+
                     sqlCommand.ExecuteNonQuery();
                     connection.Close();
-                    
+
                 }
                 catch (Exception ex)
                 {
