@@ -14,7 +14,11 @@ namespace CRUD
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            ShowDB();
+            if (!IsPostBack)
+            {
+                ShowDB();
+            }
+            
         }
         protected void CreateFileBtn_Click(object sender, EventArgs e)
         {
@@ -51,11 +55,11 @@ namespace CRUD
                         //增加參數並設定值，記得用.叫出來
                         sqlCommand.Parameters.AddWithValue("@AlbumName", TextBox_AlbumName.Text);
                         sqlCommand.Parameters.AddWithValue("@AlbumDescription", TextBox_AlbumDescription.Text);
-                        sqlCommand.Parameters.AddWithValue("@AlbumPath", folderPath);
+                        //sqlCommand.Parameters.AddWithValue("@AlbumPath", folderPath);
 
                         // 將相對路徑存入資料庫
-                        //string relativePath = "~/Album/" + albumName;
-                        //sqlCommand.Parameters.AddWithValue("@AlbumPath", relativePath);
+                        string relativePath = "~/Album/" + albumName;
+                        sqlCommand.Parameters.AddWithValue("@AlbumPath", relativePath);
 
                         //將準備的SQL指令給操作物件
                         sqlCommand.CommandText = sql;
@@ -77,6 +81,7 @@ namespace CRUD
             {
                 ResultLabel.Text = "請輸入資料夾名稱。";
             }
+            Response.Redirect("AlbumBack.aspx");
         }
 
         void ShowDB()
@@ -89,7 +94,7 @@ namespace CRUD
                 connection.Open();
             }
 
-            string sql = "select AlbumName, AlbumDescription, AlbumPath from Album ";
+            string sql = "select Id, AlbumName, AlbumDescription, AlbumPath from Album ";
 
             //發送SQL語法，取得結果
             SqlCommand sqlCommand = new SqlCommand(sql, connection);
@@ -113,16 +118,83 @@ namespace CRUD
 
         protected void GridView1_RowEditing(object sender, GridViewEditEventArgs e)
         {
-
+            GridView_AlbumUpload.EditIndex = e.NewEditIndex;
+            ShowDB();
         }
 
         protected void GridView1_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
+            GridViewRow row = GridView_AlbumUpload.Rows[e.RowIndex]; //找到目前gridview的編輯行數
+            //DropDownList dropDownList = (DropDownList)row.FindControl("dropDownList");
 
+            //string isActive = dropDownList.SelectedValue;
+            int boardId = Convert.ToInt32(GridView_AlbumUpload.DataKeys[e.RowIndex].Value); //取得資料表ID
+
+            TextBox textBoxAN = row.FindControl("TextBox_TemplateAN") as TextBox;
+            string changeTextAN = textBoxAN.Text;
+
+            TextBox textBoxAD = row.FindControl("TextBox_TemplateAD") as TextBox;
+            string changeTextAD = textBoxAD.Text;
+
+            SqlConnection connection = new SqlConnection(WebConfigurationManager.ConnectionStrings["Connectsqlhw1"].ConnectionString);
+
+            if (connection.State != System.Data.ConnectionState.Open)
+            {
+                connection.Open();
+            }
+
+            //發送SQL語法，取得結果
+            SqlCommand sqlCommand = new SqlCommand();
+            sqlCommand.Connection = connection;
+
+            string sql = $"update Album set AlbumName = @AlbumName, AlbumDescription = @AlbumDescription where Id = @BoardId";
+
+
+            sqlCommand.Parameters.AddWithValue("@AlbumName", changeTextAN);
+            sqlCommand.Parameters.AddWithValue("@AlbumDescription", changeTextAD);
+            sqlCommand.Parameters.AddWithValue("@BoardId", boardId);
+            sqlCommand.CommandText = sql;
+
+            //int s = helper.ExecuteSQL(sql);
+            //if (s > 0) Response.Write("<script>alert('更新成功');</script>");
+            //else Response.Write("<script>alert('更新失敗');</script>");
+
+            //執行該SQL查詢，用reader接資料
+            //SqlDataReader reader = sqlCommand.ExecuteReader();
+            sqlCommand.ExecuteNonQuery();
+
+            //使用這個reader物件的資料來取得內容
+            //GridView_AlbumUpload.DataSource = reader;
+
+            //GridView進行資料連接
+            //GridView_AlbumUpload.DataBind();
+
+            connection.Close();
+
+            GridView_AlbumUpload.EditIndex = -1;
+            ShowDB();
         }
         protected void GridView1_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
+            int boardId = Convert.ToInt32(GridView_AlbumUpload.DataKeys[e.RowIndex].Value);
 
+            SqlConnection connection = new SqlConnection(WebConfigurationManager.ConnectionStrings["Connectsqlhw1"].ConnectionString);
+
+            if (connection.State != System.Data.ConnectionState.Open)
+            {
+                connection.Open();
+            }
+
+            string deleteReplySql = $"delete from Album where Id = @boardId";
+            SqlCommand deleteReplyCommand = new SqlCommand(deleteReplySql, connection);
+            deleteReplyCommand.Parameters.AddWithValue("@boardId", boardId);
+            deleteReplyCommand.ExecuteNonQuery();
+
+            connection.Close();
+
+            Response.Write("<script>alert('資料刪除成功');</script>");
+
+            ShowDB();
         }
     }
 }
