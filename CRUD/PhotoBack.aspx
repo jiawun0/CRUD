@@ -48,6 +48,14 @@
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:BoundField DataField="PhotoPath" HeaderText="PhotoPath" SortExpression="PhotoPath" ReadOnly="True" />
+                    <asp:TemplateField>
+                        <EditItemTemplate>
+                            <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+                        </EditItemTemplate>
+                        <ItemTemplate>
+                            <asp:Image ID="Image1" runat="server" Width="100" Height="100" ImageUrl='<%# GetRelativeImagePath(Eval("PhotoPath").ToString()) %>' AlternateText="image lost" />
+                        </ItemTemplate>
+                    </asp:TemplateField>
                     <asp:TemplateField HeaderText="IsCover" SortExpression="IsCover">
                         <EditItemTemplate>
                             <asp:CheckBox ID="CheckBox_TemplateIC" runat="server" Checked='<%# Bind("IsCover") %>' />

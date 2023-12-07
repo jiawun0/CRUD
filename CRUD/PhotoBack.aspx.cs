@@ -112,6 +112,16 @@ namespace CRUD
             connection.Close();
         }
 
+        protected string GetRelativeImagePath(string albumPath)
+        {
+            if (!string.IsNullOrEmpty(albumPath))
+            {
+                string relativePath = albumPath.Replace(Server.MapPath("~"), "").Replace(Server.MapPath("\\"), "/");
+                return relativePath;
+            }
+            return string.Empty;
+        }
+
         protected void GridView_PhotoUpload_RowEditing(object sender, GridViewEditEventArgs e)
         {
             GridView_PhotoUpload.EditIndex = e.NewEditIndex;
