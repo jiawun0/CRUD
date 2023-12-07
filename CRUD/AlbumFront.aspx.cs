@@ -39,10 +39,10 @@ namespace CRUD
             SqlDataReader reader = sqlCommand.ExecuteReader();
 
             //使用這個reader物件的資料來取得內容
-            Repeater1.DataSource = reader;
+            Repeater_album.DataSource = reader;
 
             //進行資料連接
-            Repeater1.DataBind();
+            Repeater_album.DataBind();
 
             connection.Close();
         }
@@ -55,6 +55,11 @@ namespace CRUD
                 return relativePath;
             }
             return string.Empty;
+        }
+
+        protected void BackBtn_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("AlbumBack.aspx");
         }
     }
 }

@@ -15,13 +15,13 @@
 
             <%--<asp:Repeater ID="Repeater1" runat="server" OnItemCommand="Repeater1_ItemCommand" >--%>
             <table>
-            <asp:Repeater ID="Repeater1" runat="server" >
+            <asp:Repeater ID="Repeater_album" runat="server" >
             <ItemTemplate>
             <%# Container.ItemIndex % 3 == 0 ? "<tr>" : "" %>
             <td>
             <%--Id: <asp:Label ID="IdLabel" runat="server" Text='<%# Eval("AlbumName") %>' /><br />--%>
             AlbumName: <%--<asp:Label ID="AlbumNLabel" runat="server" Text='<%# Eval("AlbumName") %>' /><br />--%>
-                <a href='<%# "Photo.aspx?AlbumId=" + Eval("Id") %>'>
+                <a href='<%# "PhotoFront.aspx?AlbumId=" + Eval("Id") %>'>
                 <asp:Label ID="Label_hrefAN" runat="server" Text='<%# Eval("AlbumName") %>' />
                 </a>
                 <br />
@@ -30,11 +30,12 @@
             <%--<img src='<%# Eval("AlbumPath") %>' width="100" height="100" />--%>
             <%--<asp:Image ID="Image1" runat="server" Width="100" Height="100" ImageUrl='<%# GetRelativeImagePath(Eval("AlbumPath").ToString()) %>' /><br />--%>
             </td>
-            <%# Container.ItemIndex % 3 == 2 || Container.ItemIndex == (Repeater1.Items.Count - 1) ? "</tr>" : "" %>
+            <%# Container.ItemIndex % 3 == 2 || Container.ItemIndex == (Repeater_album.Items.Count - 1) ? "</tr>" : "" %>
             </ItemTemplate>
             </asp:Repeater>
             </table>
         </div>
+        <asp:Button ID="BackBtn" runat="server" Text="回到後台" OnClick="BackBtn_Click" style="height: 32px" />
     </form>
 </body>
 </html>

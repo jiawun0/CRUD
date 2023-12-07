@@ -11,7 +11,7 @@ namespace CRUD
 {
 
 
-    public partial class AlbumFront
+    public partial class PhotoFront
     {
 
         /// <summary>
@@ -33,13 +33,13 @@ namespace CRUD
         protected global::System.Web.UI.WebControls.Label Label1;
 
         /// <summary>
-        /// Repeater_album 控制項。
+        /// Repeater_photo 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater Repeater_album;
+        protected global::System.Web.UI.WebControls.Repeater Repeater_photo;
 
         /// <summary>
         /// BackBtn 控制項。
