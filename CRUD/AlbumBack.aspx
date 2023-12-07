@@ -44,7 +44,7 @@
                             <asp:Label ID="Label_TemplateAD" runat="server" Text='<%# Bind("AlbumDescription") %>'></asp:Label>
                         </ItemTemplate>
                     </asp:TemplateField>
-                    <asp:BoundField DataField="AlbumPath" HeaderText="AlbumPath" SortExpression="AlbumPath" />
+                    <asp:BoundField DataField="AlbumPath" HeaderText="AlbumPath" SortExpression="AlbumPath" ReadOnly="True" />
                     <asp:TemplateField HeaderText="Actions">
             <ItemTemplate>
                 <asp:Button ID="BtnRedirectPhotoBack" runat="server" Text="相片後台" CommandArgument='<%# Eval("Id") %>' CommandName="RedirectToPhotoBack" OnClick="BtnRedirect_Click" />
