@@ -37,40 +37,47 @@ namespace CRUD
                     string albumId = Request.QueryString["AlbumId"];
 
                     // 取得albumName，在ShowDB()內存成session
-                    string albumName = Session["AlbumName"].ToString();
+                    //string albumName = Session["AlbumName"].ToString();
 
-                    //string FileName = FileUpload1.FileName;
-                    //savePath = savePath + FileName;
-                    //string saveDirectory = Server.MapPath("~ADO2/ADO/photo/");
-                    //FileUpload1.SaveAs(savePath);
-                    string FileName = Path.GetFileName(FileUpload1.FileName);
-                    //string saveDirectory = @"C:\Users\88691\source\repos\ADO2\ADO\photo\";
-                    string saveDirectory = Server.MapPath("~/Album/" + albumName + "/");// 相簿名稱路徑
-                    string savePath = Path.Combine(saveDirectory, FileName);
-                    FileUpload1.SaveAs(savePath);
-                    //Label1.Text = "已成功上傳: " + FileName;
+                    string albumName = GetAlbumName(albumId, connection);
 
-                    connection.Open();
-                    string sql = "Insert into Photo (PhotoName, PhotoDescription, PhotoPath, AlbumId) values(@PhotoName, @PhotoDescription, @PhotoPath, @AlbumId)";
-                    SqlCommand sqlCommand = new SqlCommand(sql, connection);
-                    sqlCommand.Parameters.AddWithValue("@PhotoName", TextBox_PhotoName.Text);
-                    sqlCommand.Parameters.AddWithValue("@PhotoDescription", TextBox_PhotoDescription.Text);
-                    sqlCommand.Parameters.AddWithValue("@PhotoPath", savePath);
-                    sqlCommand.Parameters.AddWithValue("@AlbumId", albumId);
+                    //先檢查session是否為空
+                    if (!string.IsNullOrEmpty(albumName))
+                    {
+                        //string FileName = FileUpload1.FileName;
+                        //savePath = savePath + FileName;
+                        //string saveDirectory = Server.MapPath("~ADO2/ADO/photo/");
+                        //FileUpload1.SaveAs(savePath);
+                        string FileName = Path.GetFileName(FileUpload1.FileName);
+                        //string saveDirectory = @"C:\Users\88691\source\repos\ADO2\ADO\photo\";
+                        string saveDirectory = Server.MapPath("~/Album/" + albumName + "/");// 相簿名稱路徑
+                        string savePath = Path.Combine(saveDirectory, FileName);
+                        FileUpload1.SaveAs(savePath);
+                        //Label1.Text = "已成功上傳: " + FileName;
 
-                    // 將相對路徑存入資料庫
-                    //string relativePath = "~/Album/" + saveDirectory;
-                    //sqlCommand.Parameters.AddWithValue("@PhotoPath", relativePath);
+                        connection.Open();
+                        string sql = "Insert into Photo (PhotoName, PhotoDescription, PhotoPath, AlbumId) values(@PhotoName, @PhotoDescription, @PhotoPath, @AlbumId)";
+                        SqlCommand sqlCommand = new SqlCommand(sql, connection);
+                        sqlCommand.Parameters.AddWithValue("@PhotoName", TextBox_PhotoName.Text);
+                        sqlCommand.Parameters.AddWithValue("@PhotoDescription", TextBox_PhotoDescription.Text);
+                        sqlCommand.Parameters.AddWithValue("@PhotoPath", savePath);
+                        sqlCommand.Parameters.AddWithValue("@AlbumId", albumId);
 
-                    //將準備的SQL指令給操作物件
-                    sqlCommand.CommandText = sql;
+                        // 將相對路徑存入資料庫
+                        //string relativePath = "~/Album/" + saveDirectory;
+                        //sqlCommand.Parameters.AddWithValue("@PhotoPath", relativePath);
 
-                    sqlCommand.ExecuteNonQuery();
+                        //將準備的SQL指令給操作物件
+                        sqlCommand.CommandText = sql;
 
-                    Response.Write("<script>alert('相片新增成功');</script>");
-                    connection.Close();
+                        sqlCommand.ExecuteNonQuery();
 
-                    Response.Redirect("PhotoBack.aspx?AlbumId=" + albumId);
+                        Response.Write("<script>alert('相片新增成功');</script>");
+                        connection.Close();
+
+                        Response.Redirect("PhotoBack.aspx?AlbumId=" + albumId);
+                    }
+                    
                 }
                 catch (Exception ex)
                 {
@@ -111,22 +118,69 @@ namespace CRUD
 
             SqlDataReader reader = sqlCommand.ExecuteReader();
 
-            if (reader.HasRows)
-            {
-                reader.Read();
-                string albumName = reader["AlbumName"].ToString();
-                HttpContext.Current.Session["AlbumName"] = albumName;
+            reader.NextResult();
+            //使用這個reader物件的資料來取得內容
+            GridView_PhotoUpload.DataSource = reader;
 
-                //使用這個reader物件的資料來取得內容
-                GridView_PhotoUpload.DataSource = reader;
+            //進行資料連接
+            GridView_PhotoUpload.DataBind();
 
-                //進行資料連接
-                GridView_PhotoUpload.DataBind();
-            }
+            //if (reader.HasRows) //將AlbumName存入session
+            //{
+            //    while (reader.Read())
+            //    {
+            //        string albumName = reader["AlbumName"].ToString();
+            //        HttpContext.Current.Session["AlbumName"] = albumName;
+            //    }
+            //}
+            //reader.Close();
 
             connection.Close();
         }
+        
+        private string GetAlbumName(string albumId, SqlConnection connection)
+        {
+            string albumName = string.Empty;
 
+            try
+            {
+                SqlCommand sqlCommand = new SqlCommand();
+                sqlCommand.Connection = connection;
+
+                string sql = "SELECT AlbumName FROM Album WHERE Id = @AlbumId";
+
+                sqlCommand.Parameters.AddWithValue("@AlbumId", albumId);
+
+                //將準備的SQL指令給操作物件
+                sqlCommand.CommandText = sql;
+
+                if (connection.State != System.Data.ConnectionState.Open)
+                {
+                    connection.Open();
+                }
+
+                SqlDataReader reader = sqlCommand.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    reader.Read();
+                    albumName = reader["AlbumName"].ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle the exception or log it.
+                // For demonstration purposes, the exception is rethrown.
+                throw ex;
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+            return albumName;
+        }
+    
         protected string GetRelativeImagePath(string albumPath)
         {
             if (!string.IsNullOrEmpty(albumPath))

@@ -160,15 +160,21 @@ namespace CRUD
             //if (s > 0) Response.Write("<script>alert('更新成功');</script>");
             //else Response.Write("<script>alert('更新失敗');</script>");
 
-            //執行該SQL查詢，用reader接資料
-            //SqlDataReader reader = sqlCommand.ExecuteReader();
             sqlCommand.ExecuteNonQuery();
 
-            //使用這個reader物件的資料來取得內容
-            //GridView_AlbumUpload.DataSource = reader;
+            // 取得舊的、新的目錄名稱
+            string oldAlbumPath = "~/Album/" + e.OldValues["AlbumName"].ToString();
+            string newAlbumPath = "~/Album/" + changeTextAN;
 
-            //GridView進行資料連接
-            //GridView_AlbumUpload.DataBind();
+            // MapPath~取得實際路徑
+            string oldPhysicalPath = Server.MapPath(oldAlbumPath);
+            string newPhysicalPath = Server.MapPath(newAlbumPath);
+
+            //使用System.Io重新命名目錄名稱
+            if (Directory.Exists(oldPhysicalPath))
+            {
+                Directory.Move(oldPhysicalPath, newPhysicalPath);
+            }
 
             connection.Close();
 
