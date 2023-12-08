@@ -147,11 +147,12 @@ namespace CRUD
             SqlCommand sqlCommand = new SqlCommand();
             sqlCommand.Connection = connection;
 
-            string sql = $"update Album set AlbumName = @AlbumName, AlbumDescription = @AlbumDescription where Id = @BoardId";
+            string sql = $"update Album set AlbumName = @AlbumName, AlbumDescription = @AlbumDescription, AlbumPath = @AlbumPath where Id = @BoardId";
 
 
             sqlCommand.Parameters.AddWithValue("@AlbumName", changeTextAN);
             sqlCommand.Parameters.AddWithValue("@AlbumDescription", changeTextAD);
+            sqlCommand.Parameters.AddWithValue("@AlbumPath", "~/Album/" + changeTextAN);
             sqlCommand.Parameters.AddWithValue("@BoardId", boardId);
             sqlCommand.CommandText = sql;
 
