@@ -162,19 +162,19 @@ namespace CRUD
 
             sqlCommand.ExecuteNonQuery();
 
-            // 取得舊的、新的目錄名稱
-            string oldAlbumPath = "~/Album/" + e.OldValues["AlbumName"].ToString();
-            string newAlbumPath = "~/Album/" + changeTextAN;
+            //// 取得舊的、新的目錄名稱
+            //string oldAlbumPath = "~/Album/" + e.OldValues["AlbumName"].ToString();
+            //string newAlbumPath = "~/Album/" + changeTextAN;
 
-            // MapPath~取得實際路徑
-            string oldPhysicalPath = Server.MapPath(oldAlbumPath);
-            string newPhysicalPath = Server.MapPath(newAlbumPath);
+            //// MapPath~取得實際路徑
+            //string oldPhysicalPath = Server.MapPath(oldAlbumPath);
+            //string newPhysicalPath = Server.MapPath(newAlbumPath);
 
-            //使用System.Io重新命名目錄名稱
-            if (Directory.Exists(oldPhysicalPath))
-            {
-                Directory.Move(oldPhysicalPath, newPhysicalPath);
-            }
+            ////使用System.Io重新命名目錄名稱
+            //if (Directory.Exists(oldPhysicalPath))
+            //{
+            //    Directory.Move(oldPhysicalPath, newPhysicalPath);
+            //}
 
             connection.Close();
 
