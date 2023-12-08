@@ -26,7 +26,7 @@
             <br />
             <asp:Button ID="UploadBtn" runat="server" Text="上傳" OnClick="UploadBtn_Click" />
             <br />
-            <asp:Label ID="Label1" runat="server" ></asp:Label>
+            <%--<asp:Label ID="Label1" runat="server" ></asp:Label>--%>
             <br />
             <asp:GridView ID="GridView_PhotoUpload" runat="server" AutoGenerateColumns="False" DataKeyNames="Id" OnRowCancelingEdit="GridView_PhotoUpload_RowCancelingEdit" OnRowDeleting="GridView_PhotoUpload_RowDeleting" OnRowEditing="GridView_PhotoUpload_RowEditing" OnRowUpdating="GridView_PhotoUpload_RowUpdating" >
                 <Columns>

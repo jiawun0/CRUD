@@ -25,7 +25,7 @@ namespace CRUD
             // 取得資料夾名稱
             string albumName = TextBox_AlbumName.Text.Trim();
 
-            if (!string.IsNullOrEmpty(albumName))
+            if (!string.IsNullOrEmpty(albumName)) 
             {
                 try
                 {
@@ -57,7 +57,7 @@ namespace CRUD
                         sqlCommand.Parameters.AddWithValue("@AlbumDescription", TextBox_AlbumDescription.Text);
                         //sqlCommand.Parameters.AddWithValue("@AlbumPath", folderPath);
 
-                        // 將相對路徑存入資料庫
+                        // 將相對路徑存入資料庫，存入整串有風險
                         string relativePath = "~/Album/" + albumName;
                         sqlCommand.Parameters.AddWithValue("@AlbumPath", relativePath);
 
@@ -171,6 +171,7 @@ namespace CRUD
 
             connection.Close();
 
+            Response.Write("<script>alert('相簿更新成功');</script>");
             GridView_AlbumUpload.EditIndex = -1;
             ShowDB();
         }
@@ -192,7 +193,7 @@ namespace CRUD
 
             connection.Close();
 
-            Response.Write("<script>alert('資料刪除成功');</script>");
+            Response.Write("<script>alert('相簿刪除成功');</script>");
 
             ShowDB();
         }
@@ -202,7 +203,7 @@ namespace CRUD
             ShowDB();
         }
 
-        protected void FrontBtn_Click(object sender, EventArgs e)
+        protected void FrontBtn_Click(object sender, EventArgs e) 
         {
             Response.Redirect("AlbumFront.aspx");
         }

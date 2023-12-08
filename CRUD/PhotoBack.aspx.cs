@@ -33,19 +33,22 @@ namespace CRUD
             {
                 try
                 {
+                    // 取得albumId
+                    string albumId = Request.QueryString["AlbumId"];
+
+                    // 取得albumName，在ShowDB()內存成session
+                    string albumName = Session["AlbumName"].ToString();
+
                     //string FileName = FileUpload1.FileName;
                     //savePath = savePath + FileName;
                     //string saveDirectory = Server.MapPath("~ADO2/ADO/photo/");
                     //FileUpload1.SaveAs(savePath);
                     string FileName = Path.GetFileName(FileUpload1.FileName);
                     //string saveDirectory = @"C:\Users\88691\source\repos\ADO2\ADO\photo\";
-                    string saveDirectory = Server.MapPath("~/Album/");// 實際伺服器路徑
+                    string saveDirectory = Server.MapPath("~/Album/" + albumName + "/");// 相簿名稱路徑
                     string savePath = Path.Combine(saveDirectory, FileName);
                     FileUpload1.SaveAs(savePath);
-                    Label1.Text = "已成功上傳: " + FileName;
-
-                    // 取得albumId
-                    string albumId = Request.QueryString["AlbumId"];
+                    //Label1.Text = "已成功上傳: " + FileName;
 
                     connection.Open();
                     string sql = "Insert into Photo (PhotoName, PhotoDescription, PhotoPath, AlbumId) values(@PhotoName, @PhotoDescription, @PhotoPath, @AlbumId)";
@@ -63,8 +66,11 @@ namespace CRUD
                     sqlCommand.CommandText = sql;
 
                     sqlCommand.ExecuteNonQuery();
+
+                    Response.Write("<script>alert('相片新增成功');</script>");
                     connection.Close();
 
+                    Response.Redirect("PhotoBack.aspx?AlbumId=" + albumId);
                 }
                 catch (Exception ex)
                 {
@@ -74,10 +80,12 @@ namespace CRUD
             }
             else
             {
-                Label1.Text = "No File.";
+                Response.Write("<script>alert('沒有檔案可新增');</script>");
             }
+
+            
         }
-        void ShowDB(string albumId)
+        void ShowDB(string albumId) //顯示目前相簿中相片
         {
             SqlConnection connection = new SqlConnection(WebConfigurationManager.ConnectionStrings["Connectsqlhw12"].ConnectionString);
             //SqlConnection connection = new SqlConnection(@"Data Source=.\sqlexpress;Initial Catalog=LMS;Integrated Security=True");
@@ -91,7 +99,7 @@ namespace CRUD
             SqlCommand sqlCommand = new SqlCommand();
             sqlCommand.Connection = connection;
 
-            string sql = "select Photo.Id, Photo.PhotoName, Photo.PhotoDescription, Photo.PhotoPath, Photo.IsCover from Photo " +
+            string sql = "select Album.AlbumName, Photo.Id, Photo.PhotoName, Photo.PhotoDescription, Photo.PhotoPath, Photo.IsCover from Photo " +
                 " left join Album on Album.Id = Photo.AlbumId " +
                 " where AlbumId = @AlbumId ";
 
@@ -103,11 +111,18 @@ namespace CRUD
 
             SqlDataReader reader = sqlCommand.ExecuteReader();
 
-            //使用這個reader物件的資料來取得內容
-            GridView_PhotoUpload.DataSource = reader;
+            if (reader.HasRows)
+            {
+                reader.Read();
+                string albumName = reader["AlbumName"].ToString();
+                HttpContext.Current.Session["AlbumName"] = albumName;
 
-            //進行資料連接
-            GridView_PhotoUpload.DataBind();
+                //使用這個reader物件的資料來取得內容
+                GridView_PhotoUpload.DataSource = reader;
+
+                //進行資料連接
+                GridView_PhotoUpload.DataBind();
+            }
 
             connection.Close();
         }
@@ -180,9 +195,44 @@ namespace CRUD
             connection.Close();
 
             GridView_PhotoUpload.EditIndex = -1;
-
             string albumId = Request.QueryString["AlbumId"];
-            ShowDB(albumId);
+            bool isCoverUnique = IsSingleCover(albumId, boardId);
+            if (isCoverUnique)
+            {
+                ShowDB(albumId);
+            }
+        }
+
+        //檢查是否只有一個IsCover為true
+        private bool IsSingleCover(string albumId, int boardId)
+        {
+            bool IsSingle = false;
+            SqlConnection connection = new SqlConnection(WebConfigurationManager.ConnectionStrings["Connectsqlhw12"].ConnectionString);
+
+            try
+            {
+                connection.Open();
+                string sql = "select count(*) from Photo " +
+                    " where AlbumId = @AlbumId and IsCover = 1 and Id = @BoardId";
+
+                SqlCommand sqlCommand = new SqlCommand(sql, connection);
+                sqlCommand.Parameters.AddWithValue("@AlbumId", albumId);
+                sqlCommand.Parameters.AddWithValue("@BoardId", boardId);
+
+                int f = Convert.ToInt32(sqlCommand.ExecuteScalar());
+                if(f == 0) IsSingle = true;
+                else IsSingle = false;
+            }
+            catch (Exception ex)
+            {
+                //異常
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+            return IsSingle;
         }
 
         protected void GridView_PhotoUpload_RowDeleting(object sender, GridViewDeleteEventArgs e)
