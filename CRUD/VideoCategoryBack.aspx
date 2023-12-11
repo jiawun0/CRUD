@@ -19,7 +19,7 @@
             <asp:Button ID="CreateVideoCategoryBtn" runat="server" Text="新增影片分類" OnClick="CreateVideoCategoryBtn_Click" />
             <br />
             <br />
-            <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataKeyNames="Id" >
+            <asp:GridView ID="GridView_VideoCategoryBack" runat="server" AutoGenerateColumns="False" DataKeyNames="Id" OnRowCancelingEdit="GridView_VideoCategoryBack_RowCancelingEdit" OnRowDeleting="GridView_VideoCategoryBack_RowDeleting" OnRowEditing="GridView_VideoCategoryBack_RowEditing" OnRowUpdating="GridView_VideoCategoryBack_RowUpdating" >
                 <Columns>
                     <asp:BoundField DataField="Id" HeaderText="Id" InsertVisible="False" ReadOnly="True" SortExpression="Id" />
                     <asp:TemplateField HeaderText="CategoryName" SortExpression="CategoryName">
@@ -33,7 +33,7 @@
                     <asp:BoundField DataField="CategoryCreatTime" HeaderText="CategoryCreatTime" SortExpression="CategoryCreatTime" ReadOnly="True" />
                     <asp:TemplateField HeaderText="VedioBack">
             <ItemTemplate>
-                <asp:Button ID="BtnRedirectPhotoBack" runat="server" Text="影片後台" CommandArgument='<%# Eval("Id") %>' CommandName="RedirectToPhotoBack" OnClick="BtnRedirect_Click" />
+                <asp:Button ID="BtnRedirectVedioBack" runat="server" Text="影片後台" CommandArgument='<%# Eval("Id") %>' CommandName="RedirectToVedioBack" OnClick="BtnRedirect_Click" />
             </ItemTemplate>
         </asp:TemplateField>
                     <asp:CommandField ButtonType="Button" ShowDeleteButton="True" ShowEditButton="True" />
@@ -53,6 +53,7 @@
                 </UpdateParameters>
             </asp:SqlDataSource>
         </div>
+        <asp:Button ID="FrontBtn" runat="server" Text="回到前台" OnClick="FrontBtn_Click" style="height: 32px" />
     </form>
 </body>
 </html>

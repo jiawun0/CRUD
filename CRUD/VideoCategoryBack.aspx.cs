@@ -86,5 +86,104 @@ namespace CRUD
 
             connection.Close();
         }
+
+        protected void GridView_VideoCategoryBack_RowEditing(object sender, GridViewEditEventArgs e)
+        {
+            GridView_VideoCategoryBack.EditIndex = e.NewEditIndex;
+            ShowDB();
+        }
+
+        protected void GridView_VideoCategoryBack_RowUpdating(object sender, GridViewUpdateEventArgs e)
+        {
+            GridViewRow row = GridView_VideoCategoryBack.Rows[e.RowIndex]; //找到目前gridview的編輯行數
+            //DropDownList dropDownList = (DropDownList)row.FindControl("dropDownList");
+
+            //string isActive = dropDownList.SelectedValue;
+            int boardId = Convert.ToInt32(GridView_VideoCategoryBack.DataKeys[e.RowIndex].Value); //取得資料表ID
+
+            TextBox textBoxCN = row.FindControl("TextBox_TemplateCN") as TextBox;
+            string changeTextCN = textBoxCN.Text;
+
+
+            SqlConnection connection = new SqlConnection(WebConfigurationManager.ConnectionStrings["ConnectVideoCategory"].ConnectionString);
+
+            if (connection.State != System.Data.ConnectionState.Open)
+            {
+                connection.Open();
+            }
+
+            //發送SQL語法，取得結果
+            SqlCommand sqlCommand = new SqlCommand();
+            sqlCommand.Connection = connection;
+
+            string sql = $"update VideoCategory set CategoryName = @CategoryName where Id = @BoardId";
+
+
+            sqlCommand.Parameters.AddWithValue("@CategoryName", changeTextCN);
+            sqlCommand.Parameters.AddWithValue("@BoardId", boardId);
+            sqlCommand.CommandText = sql;
+
+            //int s = helper.ExecuteSQL(sql);
+            //if (s > 0) Response.Write("<script>alert('更新成功');</script>");
+            //else Response.Write("<script>alert('更新失敗');</script>");
+
+            sqlCommand.ExecuteNonQuery();
+
+            connection.Close();
+
+            Response.Write("<script>alert('更新成功');</script>");
+            GridView_VideoCategoryBack.EditIndex = -1;
+            ShowDB();
+        }
+
+        protected void GridView_VideoCategoryBack_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+            int boardId = Convert.ToInt32(GridView_VideoCategoryBack.DataKeys[e.RowIndex].Value);
+
+            SqlConnection connection = new SqlConnection(WebConfigurationManager.ConnectionStrings["ConnectVideoCategory"].ConnectionString);
+
+            if (connection.State != System.Data.ConnectionState.Open)
+            {
+                connection.Open();
+            }
+
+            string deleteSql = $"delete from VideoCategory where Id = @boardId";
+            SqlCommand deleteCommand = new SqlCommand(deleteSql, connection);
+            deleteCommand.Parameters.AddWithValue("@boardId", boardId);
+            deleteCommand.ExecuteNonQuery();
+
+            connection.Close();
+
+            Response.Write("<script>alert('刪除成功');</script>");
+
+            ShowDB();
+        }
+
+        protected void GridView_VideoCategoryBack_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+        {
+            GridView_VideoCategoryBack.EditIndex = -1;
+            ShowDB();
+        }
+
+        protected void BtnRedirect_Click(object sender, EventArgs e)
+        {
+            if (sender is Button btn)
+            {
+                string CategoryID = btn.CommandArgument;
+
+                // 將 Id 添加到 QueryString 並進行重定向
+                Response.Redirect("VideoBack.aspx?CategoryID=" + CategoryID);
+            }
+            else
+            {
+                // 如果 Id 為空，定義一個預設的重定向 URL
+                Response.Redirect("VideoBack.aspx");
+            }
+        }
+
+        protected void FrontBtn_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("VideoCategoryFront.aspx");
+        }
     }
 }

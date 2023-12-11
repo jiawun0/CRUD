@@ -193,10 +193,10 @@ namespace CRUD
                 connection.Open();
             }
 
-            string deleteReplySql = $"delete from Album where Id = @boardId";
-            SqlCommand deleteReplyCommand = new SqlCommand(deleteReplySql, connection);
-            deleteReplyCommand.Parameters.AddWithValue("@boardId", boardId);
-            deleteReplyCommand.ExecuteNonQuery();
+            string deleteSql = $"delete from Album where Id = @boardId";
+            SqlCommand deleteCommand = new SqlCommand(deleteSql, connection);
+            deleteCommand.Parameters.AddWithValue("@boardId", boardId);
+            deleteCommand.ExecuteNonQuery();
 
             connection.Close();
 
@@ -225,7 +225,7 @@ namespace CRUD
             }
             else
             {
-                // 如果 AlbumId 為空，您可以定義一個預設的重定向 URL
+                // 如果 Id 為空，定義一個預設的重定向 URL
                 Response.Redirect("PhotoBack.aspx");
             }
         }
