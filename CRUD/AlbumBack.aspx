@@ -45,7 +45,7 @@
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:BoundField DataField="AlbumPath" HeaderText="AlbumPath" SortExpression="AlbumPath" ReadOnly="True" />
-                    <asp:TemplateField HeaderText="Actions">
+                    <asp:TemplateField HeaderText="PhotoBack">
             <ItemTemplate>
                 <asp:Button ID="BtnRedirectPhotoBack" runat="server" Text="相片後台" CommandArgument='<%# Eval("Id") %>' CommandName="RedirectToPhotoBack" OnClick="BtnRedirect_Click" />
             </ItemTemplate>

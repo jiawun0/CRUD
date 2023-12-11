@@ -140,7 +140,7 @@ namespace CRUD
             connection.Close();
         }
         
-        private string GetAlbumName(string albumId, SqlConnection connection)
+        private string GetAlbumName(string albumId, SqlConnection connection)  //上傳照片需要路徑之一
         {
             string albumName = string.Empty;
 
@@ -264,7 +264,7 @@ namespace CRUD
             //    ShowDB(albumId);
             //}
         }
-        private void SetSingleCoverTrue(string albumId, int boardId)
+        private void SetSingleCoverTrue(string albumId, int boardId) //確定只有一個封面
         {
             SqlConnection connection = new SqlConnection(WebConfigurationManager.ConnectionStrings["Connectsqlhw12"].ConnectionString);
 
