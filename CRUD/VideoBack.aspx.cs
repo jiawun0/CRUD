@@ -102,5 +102,10 @@ namespace CRUD
             string CategoryID = Request.QueryString["CategoryID"];
             Response.Redirect("VideoFront.aspx?CategoryID=" + CategoryID);
         }
+
+        protected void BackBtn_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("VideoCategoryBack.aspx");
+        }
     }
 }

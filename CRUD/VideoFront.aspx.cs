@@ -13,10 +13,18 @@ namespace CRUD
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            ShowDB();
+            if (!IsPostBack)
+            {
+                if (Request.QueryString["CategoryID"] != null)
+                {
+                    string CategoryID = Request.QueryString["CategoryID"];
+
+                    ShowDB(CategoryID);
+                }
+            }
         }
 
-        void ShowDB()
+        void ShowDB(string CategoryID)
         {
             SqlConnection connection = new SqlConnection(WebConfigurationManager.ConnectionStrings["ConnectVideoBack"].ConnectionString);
             //SqlConnection connection = new SqlConnection(@"Data Source=.\sqlexpress;Initial Catalog=LMS;Integrated Security=True");
@@ -25,16 +33,16 @@ namespace CRUD
             {
                 connection.Open();
             }
-
-            string sql = "select Id, VideoName, VideoDescription, VideoURL, VideoIframe from Video ";
-
             //發送SQL語法，取得結果
-            SqlCommand sqlCommand = new SqlCommand(sql, connection);
-            //sqlCommand.Connection = connection;
+            SqlCommand sqlCommand = new SqlCommand();
+            sqlCommand.Connection = connection;
 
+            string sql = "select Id, VideoName, VideoDescription, VideoURL, VideoIframe, CategoryID from Video where CategoryID = @CategoryID";
+
+            sqlCommand.Parameters.AddWithValue("@CategoryID", CategoryID);
 
             //將準備的SQL指令給操作物件
-            //sqlCommand.CommandText = sql;
+            sqlCommand.CommandText = sql;
 
             SqlDataReader reader = sqlCommand.ExecuteReader();
 
@@ -57,7 +65,7 @@ namespace CRUD
         }
         protected void BackBtn_Click(object sender, EventArgs e)
         {
-
+            Response.Redirect("VideoBack.aspx");
         }
     }
 }

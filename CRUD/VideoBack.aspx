@@ -24,9 +24,9 @@
             <br />
             <asp:TextBox ID="TextBox_VideoURL" runat="server" Placeholder="請輸入影片完整網址" ></asp:TextBox>
             <br />
-            <asp:Label ID="Label_VideoIframe" runat="server" Text="影片嵌入: "></asp:Label>
+            <asp:Label ID="Label_VideoIframe" runat="server" Text="影片Id v= "></asp:Label>
             <br />
-            <asp:TextBox ID="TextBox_VideoIframe" runat="server" Placeholder="請輸入影片嵌入尾碼"></asp:TextBox>
+            <asp:TextBox ID="TextBox_VideoIframe" runat="server" Placeholder="請輸入影片網址尾碼"></asp:TextBox>
             <br />
             <asp:Button ID="CreateVideoBtn" runat="server" Text="上傳影片資料" OnClick="CreateVideoBtn_Click" />
             <br />
@@ -67,6 +67,8 @@
             <br />
         </div>
         <asp:Button ID="FrontBtn" runat="server" Text="回到前台" OnClick="FrontBtn_Click" style="height: 32px" />
+        <br />
+        <asp:Button ID="AlbumBack" runat="server" Text="返回影片分類後台" OnClick="BackBtn_Click" style="height: 32px" />
     </form>
 </body>
 </html>
