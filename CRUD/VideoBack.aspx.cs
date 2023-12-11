@@ -96,5 +96,11 @@ namespace CRUD
 
             connection.Close();
         }
+
+        protected void FrontBtn_Click(object sender, EventArgs e)
+        {
+            string CategoryID = Request.QueryString["CategoryID"];
+            Response.Redirect("VideoFront.aspx?CategoryID=" + CategoryID);
+        }
     }
 }

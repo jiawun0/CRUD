@@ -15,7 +15,7 @@
             <asp:GridView ID="GridView_VideoCategoryFront" runat="server" AutoGenerateColumns="False" DataKeyNames="Id" >
                 <Columns>
                     <asp:BoundField DataField="Id" HeaderText="Id" InsertVisible="False" ReadOnly="True" SortExpression="Id" />
-                    <asp:HyperLinkField DataNavigateUrlFields="Id" DataNavigateUrlFormatString="VideoFront.aspx?Id={0}" DataTextField="CategoryName" HeaderText="CategoryName" />
+                    <asp:HyperLinkField DataNavigateUrlFields="Id" DataNavigateUrlFormatString="VideoFront.aspx?CategoryID={0}" DataTextField="CategoryName" HeaderText="CategoryName" />
                     <asp:BoundField DataField="CategoryName" HeaderText="CategoryName" SortExpression="CategoryName" Visible="False" />
                     <asp:BoundField DataField="CategoryCreatTime" HeaderText="CategoryCreatTime" SortExpression="CategoryCreatTime" />
                 </Columns>
