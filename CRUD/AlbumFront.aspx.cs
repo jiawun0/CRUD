@@ -13,7 +13,10 @@ namespace CRUD
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            ShowDB();
+            if (!IsPostBack)
+            {
+                ShowDB();
+            }
         }
 
         void ShowDB()
@@ -26,7 +29,8 @@ namespace CRUD
                 connection.Open();
             }
 
-            string sql = "select Id, AlbumName, AlbumDescription, AlbumPath from Album ";
+            string sql = "select a.Id, a.AlbumName, a.AlbumDescription, a.AlbumPath, p.PhotoPath, p.IsCover, p.AlbumId from Album a " +
+                " left join Photo p on a.Id = p.AlbumId and p.IsCover = 1 ";
 
             //發送SQL語法，取得結果
             SqlCommand sqlCommand = new SqlCommand(sql, connection);

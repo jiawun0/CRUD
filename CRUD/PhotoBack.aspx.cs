@@ -229,22 +229,12 @@ namespace CRUD
 
             string sql = $"update Photo set PhotoName = @PhotoName, PhotoDescription = @PhotoDescription, IsCover = @IsCover where Id = @BoardId";
 
-
             sqlCommand.Parameters.AddWithValue("@PhotoName", changeTextPN);
             sqlCommand.Parameters.AddWithValue("@PhotoDescription", changeTextPD);
             sqlCommand.Parameters.AddWithValue("@IsCover", isCover);
             sqlCommand.Parameters.AddWithValue("@BoardId", boardId);
             sqlCommand.CommandText = sql;
-
-            //執行該SQL查詢，用reader接資料
-            //SqlDataReader reader = sqlCommand.ExecuteReader();
             sqlCommand.ExecuteNonQuery();
-
-            //使用這個reader物件的資料來取得內容
-            //GridView_AlbumUpload.DataSource = reader;
-
-            //GridView進行資料連接
-            //GridView_AlbumUpload.DataBind();
 
             connection.Close();
             string albumId = Request.QueryString["AlbumId"];
@@ -272,24 +262,25 @@ namespace CRUD
             {
                 connection.Open();
 
-                // 先將目前相片設定為 IsCover = false
-                string updateSql = "UPDATE Photo SET IsCover = 0 WHERE AlbumId = @AlbumId";
+                // 先將所有相片設定為 IsCover = false
+                string updateSql = "update Photo set IsCover = 0 where AlbumId = @AlbumId";
                 SqlCommand updateCommand = new SqlCommand(updateSql, connection);
                 updateCommand.Parameters.AddWithValue("@AlbumId", albumId);
                 updateCommand.ExecuteNonQuery();
 
                 // 再將指定的相片設定為 IsCover = true
-                string setTrueSql = "UPDATE Photo SET IsCover = 1 WHERE Id = @BoardId";
+                string setTrueSql = "update Photo set IsCover = 1 where Id = @BoardId";
                 SqlCommand setTrueCommand = new SqlCommand(setTrueSql, connection);
                 setTrueCommand.Parameters.AddWithValue("@BoardId", boardId);
                 setTrueCommand.ExecuteNonQuery();
             }
             catch (Exception ex)
             {
-                // 處理例外
+                //處理例外
             }
             finally
             {
+                //確保最後有正確關閉
                 connection.Close();
             }
         }
@@ -343,7 +334,7 @@ namespace CRUD
 
             connection.Close();
 
-            Response.Write("<script>alert('資料刪除成功');</script>");
+            Response.Write("<script>alert('照片刪除成功');</script>");
 
             string albumId = Request.QueryString["AlbumId"];
             ShowDB(albumId);

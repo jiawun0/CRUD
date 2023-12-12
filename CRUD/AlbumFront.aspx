@@ -21,12 +21,15 @@
             <td>
             <%--Id: <asp:Label ID="IdLabel" runat="server" Text='<%# Eval("AlbumName") %>' /><br />--%>
             AlbumName: <%--<asp:Label ID="AlbumNLabel" runat="server" Text='<%# Eval("AlbumName") %>' /><br />--%>
-                <a href='<%# "PhotoFront.aspx?AlbumId=" + Eval("Id") %>'>
-                <asp:Label ID="Label_hrefAN" runat="server" Text='<%# Eval("AlbumName") %>' />
-                </a>
-                <br />
+            <a href='<%# "PhotoFront.aspx?AlbumId=" + Eval("Id") %>'>
+            <asp:Label ID="Label_hrefAN" runat="server" Text='<%# Eval("AlbumName") %>' /></a>
+            <br />
             AlbumDescription: <asp:Label ID="AlbumDLabel" runat="server" Text='<%# Eval("AlbumDescription") %>' /><br />
-            <img src='<%# GetRelativeImagePath(Eval("AlbumPath").ToString()) %>' width="100" height="100" />
+            <asp:Image ID="Image_PhotoIsCover" runat="server" Width="100" Height="100"
+                ImageUrl='<%# GetRelativeImagePath(Eval("PhotoPath").ToString()) %>' Visible='<%# !string.IsNullOrEmpty(GetRelativeImagePath(Eval("PhotoPath").ToString())) %>'/>
+            <asp:Literal ID="Literal_IsCover" runat="server" Text='<%# Eval("IsCover") %>' Visible="false" />
+            <br />
+            <%--<img src='<%# GetRelativeImagePath(Eval("AlbumPath").ToString()) %>' width="100" height="100" />--%>
             <%--<img src='<%# Eval("AlbumPath") %>' width="100" height="100" />--%>
             <%--<asp:Image ID="Image1" runat="server" Width="100" Height="100" ImageUrl='<%# GetRelativeImagePath(Eval("AlbumPath").ToString()) %>' /><br />--%>
             </td>

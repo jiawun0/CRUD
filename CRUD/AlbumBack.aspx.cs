@@ -69,7 +69,7 @@ namespace CRUD
                     }
                     else
                     {
-                        ResultLabel.Text = "資料夾已存在。";
+                        ResultLabel.Text = "資料夾已存在";
                     }
                 }
                 catch (Exception ex)
@@ -79,7 +79,7 @@ namespace CRUD
             }
             else
             {
-                ResultLabel.Text = "請輸入資料夾名稱。";
+                ResultLabel.Text = "請輸入資料夾名稱";
             }
             Response.Redirect("AlbumBack.aspx");
         }
