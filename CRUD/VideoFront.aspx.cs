@@ -54,7 +54,32 @@ namespace CRUD
 
             connection.Close();
         }
-        protected string GetThumbnailUrl(string videoIframe)
+
+        protected string GetVideoID(string fullUrl) //如果忘記將videoIframe加入資料庫
+        {
+            if (!string.IsNullOrEmpty(fullUrl) && fullUrl.Contains("youtube.com/watch?v="))
+            {
+                //IndexOf，找到後從v開始算0
+                int index = fullUrl.IndexOf("v=") + 2;
+
+                if (index != -1)
+                {
+                    //substring
+                    string videoID = fullUrl.Substring(index);
+
+                    //如果Url有其他符號
+                    int endindex = videoID.IndexOf('&');
+
+                    if (endindex != -1)
+                    {
+                        videoID = videoID.Substring(0,endindex);
+                    }
+                    return videoID;
+                }
+            }
+            return string.Empty;
+        }
+        protected string GetThumbnailUrl(string videoIframe) //取得縮圖
         {
             if (!string.IsNullOrEmpty(videoIframe))
             {
