@@ -24,21 +24,36 @@
             <br />
             <asp:TextBox ID="TextBox_VideoURL" runat="server" Placeholder="請輸入影片完整網址" ></asp:TextBox>
             <br />
-            <asp:Label ID="Label_VideoIframe" runat="server" Text="影片Id v= "></asp:Label>
-            <br />
-            <asp:TextBox ID="TextBox_VideoIframe" runat="server" Placeholder="請輸入影片網址尾碼"></asp:TextBox>
-            <br />
+            <%--<asp:Label ID="Label_VideoIframe" runat="server" Text="影片Id v= "></asp:Label>
+            <br />--%>
+            <%--<asp:TextBox ID="TextBox_VideoIframe" runat="server" Placeholder="請輸入影片網址尾碼"></asp:TextBox>
+            <br />--%>
             <asp:Button ID="CreateVideoBtn" runat="server" Text="上傳影片資料" OnClick="CreateVideoBtn_Click" />
             <br />
             <br />
-            <asp:GridView ID="GridView_VideoBack" runat="server" AutoGenerateColumns="False" DataKeyNames="Id" >
+            <asp:GridView ID="GridView_VideoBack" runat="server" AutoGenerateColumns="False" DataKeyNames="Id" OnRowCancelingEdit="GridView_VideoBack_RowCancelingEdit" OnRowDeleting="GridView_VideoBack_RowDeleting" OnRowEditing="GridView_VideoBack_RowEditing" OnRowUpdating="GridView_VideoBack_RowUpdating" >
                 <Columns>
                     <asp:BoundField DataField="Id" HeaderText="Id" InsertVisible="False" ReadOnly="True" SortExpression="Id" />
-                    <asp:BoundField DataField="VideoName" HeaderText="VideoName" SortExpression="VideoName" />
-                    <asp:BoundField DataField="VideoDescription" HeaderText="VideoDescription" SortExpression="VideoDescription" />
+                    <asp:TemplateField HeaderText="VideoName" SortExpression="VideoName">
+                        <EditItemTemplate>
+                            <asp:TextBox ID="TextBox_TemplateVN" runat="server" Text='<%# Bind("VideoName") %>'></asp:TextBox>
+                        </EditItemTemplate>
+                        <ItemTemplate>
+                            <asp:Label ID="Label_TemplateVN" runat="server" Text='<%# Bind("VideoName") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
                     <%--<asp:BoundField DataField="VideoURL" HeaderText="VideoURL" SortExpression="VideoURL" />
                     <asp:BoundField DataField="VideoIframe" HeaderText="VideoIframe" SortExpression="VideoIframe" />
-                    --%><asp:BoundField DataField="VideoCreatTime" HeaderText="VideoCreatTime" SortExpression="VideoCreatTime" />
+                    --%>
+                    <asp:TemplateField HeaderText="VideoDescription" SortExpression="VideoDescription">
+                        <EditItemTemplate>
+                            <asp:TextBox ID="TextBox_TemplateVD" runat="server" Text='<%# Bind("VideoDescription") %>'></asp:TextBox>
+                        </EditItemTemplate>
+                        <ItemTemplate>
+                            <asp:Label ID="Label_TemplateVD" runat="server" Text='<%# Bind("VideoDescription") %>'></asp:Label>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:BoundField DataField="VideoCreatTime" HeaderText="VideoCreatTime" SortExpression="VideoCreatTime" ReadOnly="True" />
                     <%--<asp:BoundField DataField="CategoryID" HeaderText="CategoryID" SortExpression="CategoryID" />--%>
                     <asp:CommandField ButtonType="Button" ShowDeleteButton="True" ShowEditButton="True" />
                 </Columns>

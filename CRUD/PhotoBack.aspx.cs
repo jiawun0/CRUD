@@ -140,7 +140,7 @@ namespace CRUD
             connection.Close();
         }
         
-        private string GetAlbumName(string albumId, SqlConnection connection)  //上傳照片需要路徑之一
+        private string GetAlbumName(string albumId, SqlConnection connection)  //上傳照片需要路徑(名稱)
         {
             string albumName = string.Empty;
 
@@ -181,7 +181,7 @@ namespace CRUD
             return albumName;
         }
     
-        protected string GetRelativeImagePath(string albumPath)
+        protected string GetRelativeImagePath(string albumPath) //相對路徑
         {
             if (!string.IsNullOrEmpty(albumPath))
             {
@@ -336,10 +336,10 @@ namespace CRUD
                 connection.Open();
             }
 
-            string deleteReplySql = $"delete from Photo where Id = @boardId";
-            SqlCommand deleteReplyCommand = new SqlCommand(deleteReplySql, connection);
-            deleteReplyCommand.Parameters.AddWithValue("@boardId", boardId);
-            deleteReplyCommand.ExecuteNonQuery();
+            string deleteSql = $"delete from Photo where Id = @boardId";
+            SqlCommand deleteCommand = new SqlCommand(deleteSql, connection);
+            deleteCommand.Parameters.AddWithValue("@boardId", boardId);
+            deleteCommand.ExecuteNonQuery();
 
             connection.Close();
 

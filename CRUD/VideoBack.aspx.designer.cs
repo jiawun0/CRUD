@@ -87,24 +87,6 @@ namespace CRUD
         protected global::System.Web.UI.WebControls.TextBox TextBox_VideoURL;
 
         /// <summary>
-        /// Label_VideoIframe 控制項。
-        /// </summary>
-        /// <remarks>
-        /// 自動產生的欄位。
-        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label_VideoIframe;
-
-        /// <summary>
-        /// TextBox_VideoIframe 控制項。
-        /// </summary>
-        /// <remarks>
-        /// 自動產生的欄位。
-        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox_VideoIframe;
-
-        /// <summary>
         /// CreateVideoBtn 控制項。
         /// </summary>
         /// <remarks>
