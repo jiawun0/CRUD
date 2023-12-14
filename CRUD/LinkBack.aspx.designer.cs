@@ -96,21 +96,39 @@ namespace CRUD
         protected global::System.Web.UI.WebControls.Label Label_LinkThumbnail;
 
         /// <summary>
-        /// TextBox_LinkThumbnail 控制項。
+        /// FileUpload_LinkT 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox_LinkThumbnail;
+        protected global::System.Web.UI.WebControls.FileUpload FileUpload_LinkT;
 
         /// <summary>
-        /// CreateLinkBtn 控制項。
+        /// UploadBtn 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button CreateLinkBtn;
+        protected global::System.Web.UI.WebControls.Button UploadBtn;
+
+        /// <summary>
+        /// GridView_LinkUpload 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView GridView_LinkUpload;
+
+        /// <summary>
+        /// SqlDataSource1 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSource1;
     }
 }

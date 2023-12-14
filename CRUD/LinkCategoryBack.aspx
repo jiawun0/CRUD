@@ -34,7 +34,7 @@
                     <asp:BoundField DataField="CategoryCreatTime" HeaderText="CategoryCreatTime" SortExpression="CategoryCreatTime" ReadOnly="True" />
                     <asp:TemplateField HeaderText="LinkBack">
             <ItemTemplate>
-                <asp:Button ID="BtnRedirectLinkBack" runat="server" Text="連結後台" CommandArgument='<%# Eval("Id") %>' CommandName="RedirectToLinkBack" />
+                <asp:Button ID="BtnRedirectLinkBack" runat="server" Text="連結後台" CommandArgument='<%# Eval("Id") %>' CommandName="RedirectToLinkBack" OnClick="BtnRedirect_Click" />
             </ItemTemplate>
         </asp:TemplateField>
                     <asp:CommandField ButtonType="Button" ShowDeleteButton="True" ShowEditButton="True" />
