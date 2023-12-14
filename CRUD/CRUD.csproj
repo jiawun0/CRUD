@@ -127,6 +127,10 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="LinkBack.aspx" />
+    <Content Include="LinkCategoryBack.aspx" />
+    <Content Include="LinkCategoryFront.aspx" />
+    <Content Include="LinkFront.aspx" />
     <Content Include="PhotoBack.aspx" />
     <Content Include="PhotoFront.aspx" />
     <Content Include="Scripts\bootstrap.js" />
@@ -207,6 +211,34 @@
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="LinkBack.aspx.cs">
+      <DependentUpon>LinkBack.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="LinkBack.aspx.designer.cs">
+      <DependentUpon>LinkBack.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="LinkCategoryBack.aspx.cs">
+      <DependentUpon>LinkCategoryBack.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="LinkCategoryBack.aspx.designer.cs">
+      <DependentUpon>LinkCategoryBack.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="LinkCategoryFront.aspx.cs">
+      <DependentUpon>LinkCategoryFront.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="LinkCategoryFront.aspx.designer.cs">
+      <DependentUpon>LinkCategoryFront.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="LinkFront.aspx.cs">
+      <DependentUpon>LinkFront.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="LinkFront.aspx.designer.cs">
+      <DependentUpon>LinkFront.aspx</DependentUpon>
     </Compile>
     <Compile Include="PhotoBack.aspx.cs">
       <DependentUpon>PhotoBack.aspx</DependentUpon>
