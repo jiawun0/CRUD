@@ -62,6 +62,70 @@ namespace CRUD
             connection.Close();
         }
 
+        void ShowDB2(string CategoryID, string sortExpression, SortDirection sortDirection)
+        {
+            SqlConnection connection = new SqlConnection(WebConfigurationManager.ConnectionStrings["ConnectLB"].ConnectionString);
+
+            if (connection.State != System.Data.ConnectionState.Open)
+            {
+                connection.Open();
+            }
+
+            // Prepare the SQL query
+            string sql = $"SELECT l.Id, l.LinkName, l.LinkDescription, l.LinkCreatTime, l.LinkURL, l.LinkThumbnail " +
+                         $"FROM Link l " +
+                         $"JOIN LinkCategory lc ON l.CategoryID = lc.ID " +
+                         $"WHERE l.CategoryID = @CategoryID ";
+
+            // Check and apply sorting
+            if (!string.IsNullOrEmpty(sortExpression))
+            {
+                sql += $"ORDER BY {sortExpression} {(sortDirection == SortDirection.Ascending ? "ASC" : "DESC")}";
+            }
+
+            // Create command and add parameters
+            SqlCommand sqlCommand = new SqlCommand(sql, connection);
+            sqlCommand.Parameters.AddWithValue("@CategoryID", CategoryID);
+
+            // Execute the query and bind data to GridView
+            SqlDataReader reader = sqlCommand.ExecuteReader();
+            GridView_LinkUpload.DataSource = reader;
+            GridView_LinkUpload.DataBind();
+
+            connection.Close();
+        }
+
+        protected void GridView_LinkUpload_Sorting(object sender, GridViewSortEventArgs e)
+        {
+            string CategoryID = Request.QueryString["CategoryID"];
+            // Get the current sort direction
+            SortDirection currentSortDirection = GetSortDirection(e.SortExpression);
+
+            // Call ShowDB2 method passing the CategoryID, sort expression, and current sort direction
+            ShowDB2(CategoryID, e.SortExpression, currentSortDirection);
+
+            // Store the sort expression and direction for future reference
+            ViewState["SortExpression"] = e.SortExpression;
+            ViewState["SortDirection"] = currentSortDirection;
+        }
+
+        private SortDirection GetSortDirection(string column)
+        {
+            // By default, set the sort direction to ascending
+            SortDirection sortDirection = SortDirection.Ascending;
+
+            // Check if the column is the one that was just clicked
+            if (ViewState["SortExpression"] != null && ViewState["SortExpression"].ToString() == column)
+            {
+                // If the column was clicked previously, reverse the sort direction
+                sortDirection = ViewState["SortDirection"] as SortDirection? == SortDirection.Ascending
+                    ? SortDirection.Descending
+                    : SortDirection.Ascending;
+            }
+
+            return sortDirection;
+        }
+
         protected void UploadBtn_Click(object sender, EventArgs e)
         {
             SqlConnection connection = new SqlConnection(WebConfigurationManager.ConnectionStrings["ConnectLB"].ConnectionString);
@@ -213,5 +277,30 @@ namespace CRUD
             string CategoryID = Request.QueryString["CategoryID"];
             ShowDB(CategoryID);
         }
+
+        protected void FrontBtn_Click(object sender, EventArgs e)
+        {
+            if (Request.QueryString["CategoryID"] != null)
+            {
+                string CategoryID = Request.QueryString["CategoryID"];
+
+                // 將目前頁面的 QueryString 保留並添加到新的 URL 中
+                string redirectUrl = "LinkFront.aspx?CategoryID=" + CategoryID;
+
+                // 重新導向到下一個頁面
+                Response.Redirect(redirectUrl);
+            }
+            else
+            {
+                // 如果 AlbumId 為空，您可以定義一個預設的重定向 URL
+                Response.Redirect("LinkFront.aspx");
+            }
+        }
+
+        protected void LinkCBack_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("LinkCategoryBack.aspx");
+        }
+
     }
 }

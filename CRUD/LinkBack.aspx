@@ -31,7 +31,7 @@
             <asp:Button ID="UploadBtn" runat="server" Text="上傳" OnClick="UploadBtn_Click" />
             <br />
             <br />
-            <asp:GridView ID="GridView_LinkUpload" runat="server" AutoGenerateColumns="False" DataKeyNames="Id" OnRowCancelingEdit="GridView_LinkUpload_RowCancelingEdit" OnRowDeleting="GridView_LinkUpload_RowDeleting" OnRowEditing="GridView_LinkUpload_RowEditing" OnRowUpdating="GridView_LinkUpload_RowUpdating" >
+            <asp:GridView ID="GridView_LinkUpload" runat="server" AutoGenerateColumns="False" DataKeyNames="Id" OnRowCancelingEdit="GridView_LinkUpload_RowCancelingEdit" OnRowDeleting="GridView_LinkUpload_RowDeleting" OnRowEditing="GridView_LinkUpload_RowEditing" OnRowUpdating="GridView_LinkUpload_RowUpdating" AllowSorting="True" >
                 <Columns>
                     <asp:BoundField DataField="Id" HeaderText="Id" InsertVisible="False" ReadOnly="True" SortExpression="Id" />
                     <asp:TemplateField HeaderText="LinkName" SortExpression="LinkName">
@@ -85,6 +85,9 @@
                 </UpdateParameters>
             </asp:SqlDataSource>
         </div>
+        <asp:Button ID="FrontBtn" runat="server" Text="回到連結前台" OnClick="FrontBtn_Click" style="height: 32px" />
+        <br />
+        <asp:Button ID="LinkCBack" runat="server" Text="返回連結種類後台" OnClick="LinkCBack_Click" style="height: 32px" />
     </form>
 </body>
 </html>
