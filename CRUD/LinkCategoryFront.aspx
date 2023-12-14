@@ -10,7 +10,19 @@
 <body>
     <form id="form1" runat="server">
         <div>
-        </div>
+            <asp:Label ID="Label1" runat="server" Text="連結種類前台"></asp:Label>
+            <br />
+            <asp:GridView ID="GridView_LinkCategoryFront" runat="server" AutoGenerateColumns="False" DataKeyNames="Id" >
+                <Columns>
+                    <asp:BoundField DataField="Id" HeaderText="Id" InsertVisible="False" ReadOnly="True" SortExpression="Id" />
+                    <asp:HyperLinkField DataNavigateUrlFields="Id" DataNavigateUrlFormatString="LinkFront.aspx?CategoryID={0}" DataTextField="CategoryName" HeaderText="CategoryName" />
+                    <asp:BoundField DataField="CategoryName" HeaderText="CategoryName" SortExpression="CategoryName" Visible="False" />
+                    <asp:BoundField DataField="CategoryCreatTime" HeaderText="CategoryCreatTime" SortExpression="CategoryCreatTime" />
+                </Columns>
+            </asp:GridView>
+            <br />
+            <asp:Button ID="BackBtn" runat="server" Text="回到後台" OnClick="BackBtn_Click" style="height: 32px" />
+            </div>
     </form>
 </body>
 </html>
